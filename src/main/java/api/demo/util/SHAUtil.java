@@ -51,4 +51,11 @@ public class SHAUtil {
         }
         return new String(str);
     }
+
+    public static void main(String[] args) {
+        String s = sha512(
+            "nonce=8234567890123456789012345678901234567890123456789012345678901238&symbol=CNHJPY&timestamp=1542974873185&userId=300005" + "123qwe");
+
+        System.out.println(s);
+    }
 }
