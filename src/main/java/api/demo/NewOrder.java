@@ -11,48 +11,48 @@ import java.util.Map;
  */
 public class NewOrder {
 
-    public static void requestProd() {
+    public static void request() {
 
         Map<String, Object> newOrderParam = new HashMap<>();
 
-        newOrderParam.put("userId", 666);
-        newOrderParam.put("cOrderId", UUIDGenerator.generate());
+        // 用户ID
+        newOrderParam.put("userId", 123);
+
+        // 客户订单号
+        newOrderParam.put("cOrderId", "");
+
+        // 货币对
         newOrderParam.put("symbol", "AUDUSD");
+
+        // 买卖方向
         newOrderParam.put("side", "SELL");
-        newOrderParam.put("qty", "5");
+
+        // 交易数量
+        newOrderParam.put("qty", "5.00");
+
+        // 交割期限 T+0 ON
         newOrderParam.put("tenor", "ON");
+
+        // 类型 MKT 市价
         newOrderParam.put("type", "MKT");
+
+        // 备注 交易状态通知一并返回
         newOrderParam.put("memo", "~~~~");
-        newOrderParam.put("notifyUrl", "https://fx1.pingpongx.com/cb/abc");
+
+        // 交易状态通知URL
+        newOrderParam.put("notifyUrl", "");
+
+        // 64位随机数
         newOrderParam.put("nonce", UUIDGenerator.generate() + UUIDGenerator.generate());
+
+        // 客户端时间戳
         newOrderParam.put("timestamp", System.currentTimeMillis());
 
-        String s = RequestUtil.post(newOrderParam, "ABCDEFG", "https://fx1.pingpongx.com/v2/tx/order/create");
-        System.out.println(s);
-    }
-
-    public static void requestLocal() {
-
-        Map<String, Object> newOrderParam = new HashMap<>();
-
-        newOrderParam.put("userId", 666);
-        newOrderParam.put("cOrderId", UUIDGenerator.generate());
-        newOrderParam.put("symbol", "USDCNH");
-        newOrderParam.put("side", "SELL");
-        newOrderParam.put("qty", "10");
-        newOrderParam.put("tenor", "ON");
-        newOrderParam.put("type", "MKT");
-        newOrderParam.put("memo", "~~~~");
-        newOrderParam.put("notifyUrl", "http://127.0.0.1:8080/cb/abc");
-        newOrderParam.put("nonce", "c93408e21c874298a5f6b57cb43db4c26bd7a99d80944eaf8c4cc543691d2faf");
-        newOrderParam.put("timestamp", System.currentTimeMillis());
-
-        String s = RequestUtil.post(newOrderParam, "ABCDEFG", "http://127.0.0.1:8080/v2/tx/order/create");
+        String s = RequestUtil.post(newOrderParam, "secretKey", "https://fx1.pingpongx.com/v2/tx/order/create");
         System.out.println(s);
     }
 
     public static void main(String[] args) {
-        requestProd();
-        // requestLocal();
+        request();
     }
 }

@@ -1,11 +1,15 @@
 package api.demo.util;
 
 import com.alibaba.fastjson.JSON;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -92,5 +96,49 @@ public class RequestUtil {
         }
 
         return sb.substring(0, end);
+    }
+
+    /**
+     * 获取请求体，编码为UTF-8
+     *
+     * @param request 请求
+     * @return 请求体数据
+     */
+    public static String getBody(HttpServletRequest request) throws IOException {
+        return getBody(request, "UTF-8");
+    }
+
+    /**
+     * 获取请求体
+     *
+     * @param request 请求
+     * @param charset 编码
+     * @return 请求体数据
+     */
+    public static String getBody(HttpServletRequest request, String charset) throws IOException {
+        byte[] data = getBodyBytes(request);
+        return new String(data, charset);
+    }
+
+    /**
+     * 获取请求体字节数据
+     *
+     * @param request 请求
+     * @return 请求体字节数据
+     */
+    public static byte[] getBodyBytes(HttpServletRequest request) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        InputStream inputStream = request.getInputStream();
+        BufferedInputStream bis = new BufferedInputStream(inputStream);
+        try {
+            byte[] buffer = new byte[512];
+            int len;
+            while ((len = bis.read(buffer)) > 0) {
+                baos.write(buffer, 0, len);
+            }
+            return baos.toByteArray();
+        } finally {
+//            bis.close();
+        }
     }
 }

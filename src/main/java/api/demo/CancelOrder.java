@@ -11,22 +11,33 @@ import java.util.Map;
  */
 public class CancelOrder {
 
-    public static void requestProd() {
+    public static void request() {
 
         Map<String, Object> newOrderParam = new HashMap<>();
 
-        newOrderParam.put("userId", 666);
+        // 用户ID
+        newOrderParam.put("userId", 123);
+
+        // 客户订单号
+        newOrderParam.put("cOrderId", "15433979336258638");
+
+        // 平台订单号
         newOrderParam.put("orderId", "15433979336258638");
-        newOrderParam.put("notifyUrl", "https://fx1.pingpongx.com/cb/bcd");
+
+        //交易撤回拒绝通知URL
+        newOrderParam.put("notifyUrl", "");
+
+        // 64位随机数
         newOrderParam.put("nonce", UUIDGenerator.generate() + UUIDGenerator.generate());
+
+        // 客户端时间戳
         newOrderParam.put("timestamp", System.currentTimeMillis());
 
-        String s = RequestUtil.post(newOrderParam, "ABCDEFG", "https://fx1.pingpongx.com/v2/tx/order/cancel");
+        String s = RequestUtil.post(newOrderParam, "secretKey", "https://fx1.pingpongx.com/v2/tx/order/cancel");
         System.out.println(s);
     }
 
     public static void main(String[] args) {
-        requestProd();
-        // requestLocal();
+        request();
     }
 }
