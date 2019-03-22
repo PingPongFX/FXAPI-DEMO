@@ -18,11 +18,14 @@ public class NewOrder {
         // 用户ID
         newOrderParam.put("userId", 123);
 
-        // 客户订单号
+        // 客户订单号 请保证唯一
         newOrderParam.put("cOrderId", "");
 
         // 货币对
         newOrderParam.put("symbol", "AUDUSD");
+
+        // 交易货币
+        newOrderParam.put("currency", "AUD");
 
         // 买卖方向
         newOrderParam.put("side", "SELL");
@@ -33,8 +36,8 @@ public class NewOrder {
         // 交割期限 T+0 ON
         newOrderParam.put("tenor", "ON");
 
-        // 类型 MKT 市价
-        newOrderParam.put("type", "MKT");
+        // rateId 通过quote接口获取的汇率ID 若没有获取到则不传
+        newOrderParam.put("rateId", "123123123");
 
         // 备注 交易状态通知一并返回
         newOrderParam.put("memo", "~~~~");
